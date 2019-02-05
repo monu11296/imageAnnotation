@@ -9,6 +9,13 @@ class App extends Component {
     this.state = { file: null }
 
     this.handleChange = this.handleChange.bind(this)
+    this.handleClearData = this.handleClearData.bind(this);
+  }
+
+  handleClearData(event){
+    sessionStorage.clear();
+    window.location.reload();
+
   }
 
   handleChange(event) {
@@ -48,6 +55,12 @@ class App extends Component {
       ) : (<p>Please upload an image</p>)
       }
       <p>{Imgname}</p>
+
+      {
+      this.state.file != null ?
+      <button onClick={this.handleClearData}>Clear Data</button>
+      : <p>Nothing to clear</p>
+      }
       
       </div>
 

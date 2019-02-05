@@ -4,6 +4,7 @@ import { RectangleSelector } from 'react-image-annotation/lib/selectors'
 
 var textData = [];
 
+
 const Box = ({ children, geometry, style }) => (
   <div
     style={{
@@ -80,6 +81,7 @@ class ImgAnnotation extends Component {
     if(annotationsData) {
       this.setState({annotations: JSON.parse(annotationsData) });
       this.getAnnotationText();
+      //this.getAnnotationGeometry();
     }
   
   }
@@ -99,6 +101,7 @@ class ImgAnnotation extends Component {
     )
     )
   }
+
 
 
   render () {
@@ -124,7 +127,8 @@ class ImgAnnotation extends Component {
 
       />
       <p>{this.showAnnotationText()}</p>
-      
+     
+      <p>{sessionStorage.getItem('annotationsdata')}</p>
      
 
       </div>

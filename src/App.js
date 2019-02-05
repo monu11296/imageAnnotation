@@ -22,6 +22,7 @@ class App extends Component {
     sessionStorage.setItem('filename', JSON.stringify(local));
   }
 
+
   componentDidMount () {
     const fileName = sessionStorage.getItem('filename');
     if(fileName) {

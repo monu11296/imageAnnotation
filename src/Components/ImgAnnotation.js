@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Annotation from 'react-image-annotation'
 import { RectangleSelector } from 'react-image-annotation/lib/selectors'
 
+var textData = [];
+
 const Box = ({ children, geometry, style }) => (
   <div
     style={{
@@ -30,9 +32,9 @@ function renderHighlight ({ annotation, active }) {
         color: 'red',
         fontSize: '25px',
         border: 'solid 1px white',
+        /*
         boxShadow: active
-          && '0 0 20px 20px rgba(255, 255, 255, 0.3) inset',
-          pointerEvents:'none'
+          && '0 0 20px 20px rgba(255, 255, 255, 0.3) inset', */
       }}
     >
       {annotation.data.text}
@@ -69,6 +71,7 @@ class ImgAnnotation extends Component {
   saveToLocal() {
     const local = this.state.annotations;
     sessionStorage.setItem('annotationsdata', JSON.stringify(local));
+    this.getAnnotationText();
   }
 
 
@@ -76,12 +79,30 @@ class ImgAnnotation extends Component {
     const annotationsData = sessionStorage.getItem('annotationsdata');
     if(annotationsData) {
       this.setState({annotations: JSON.parse(annotationsData) });
+      this.getAnnotationText();
     }
+  
+  }
+
+  getAnnotationText(){
+      const allannotationData = JSON.parse(sessionStorage.getItem('annotationsdata'));
+      
+      for(var x = 0; x < allannotationData.length; x++) {
+        textData[x] = allannotationData[x].data['text'];
+      }
+  } 
+
+  showAnnotationText(){
+    return (
+    textData.map((textData) =>
+    <li key={Math.random()}>{textData}</li>
+    )
+    )
   }
 
 
-
   render () {
+
     return (
 
       <div>
@@ -102,8 +123,9 @@ class ImgAnnotation extends Component {
         renderHighlight={renderHighlight}
 
       />
-
-      <p>{sessionStorage.getItem('annotationsdata')}</p>
+      <p>{this.showAnnotationText()}</p>
+      
+     
 
       </div>
     )
